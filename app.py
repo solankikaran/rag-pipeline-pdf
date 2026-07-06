@@ -9,7 +9,8 @@ from data.employees import generate_employee_data
 
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_ollama import OllamaLLM, OllamaEmbeddings
+from langchain_ollama import OllamaEmbeddings
+from langchain_chroma import Chroma
 
 if __name__ == "__main__":
 
