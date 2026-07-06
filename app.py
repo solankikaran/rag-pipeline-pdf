@@ -16,12 +16,15 @@ if __name__ == "__main__":
 
     st.set_page_config(page_title="Company onboarding", page_icon="☂︎", layout="wide")
 
+    logging.basicConfig(level=logging.INFO)
+
     @st.cache_data(ttl=3600, show_spinner="Loading employee data...")
     def get_user_data():
         return generate_employee_data(1)[0]
     
-    def init_vector_store(pdf_path="./data/umbrella_corp_policies.pdf"):
-
+    @st.cache_resource(ttl=3600, show_spinner="Loading vector store...")
+    def init_vector_store(pdf_path):
+        
         try:
             loader = PyPDFLoader(pdf_path)
             docs = loader.load()
@@ -48,3 +51,6 @@ if __name__ == "__main__":
             logging.error(f"Error initializing vector store: {str(e)}")
             st.error(f"Failed to initialize vectore store: {str(e)}")
             return None
+    
+    user_data = get_user_data()
+    init_vector_store("data/umbrella_corp_policies.pdf")
